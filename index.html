@@ -6,51 +6,240 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Padrão Kendo UI</title>
 
-  <link href="lib/img/icons/pg.favicon.png" rel="shortcut icon">
+  <link href="img/icons/pg.favicon.png" rel="shortcut icon">
 
-  <link href="lib/css/pg.kendo.common.min.css" rel="stylesheet">
-  <link href="lib/css/pg.kendo.blueopal.min.css" rel="stylesheet">
-  <link href="lib/css/pg.kendo.blueopal.mobile.min.css" rel="stylesheet">
-  <link href="lib/css/pg.kendo.colors.min.css" rel="stylesheet">
-  <link href="lib/css/pg.icons.css" rel="stylesheet">
-  <link href="lib/css/pg.libFrontbox.css" rel="stylesheet">
-  <link href="lib/css/pg.multiple-select.css" rel="stylesheet">
-  <link href="lib/css/pg.loading.css" rel="stylesheet">
-  <link href="lib/css/kendo.global.min.css" rel="stylesheet">
-  <link href="lib/css/ckeditor.pontogov.css" rel="stylesheet">
-  <link rel="stylesheet" href="lib/js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
-  <link href="lib/js/rs-plugin/css/settings.css" rel="stylesheet">
+  <link href="css/pg.kendo.common.min.css" rel="stylesheet">
+  <link href="css/pg.kendo.blueopal.min.css" rel="stylesheet">
+  <link href="css/pg.kendo.blueopal.mobile.min.css" rel="stylesheet">
+  <link href="css/pg.kendo.colors.min.css" rel="stylesheet">
+  <link href="css/pg.icons.css" rel="stylesheet">
+  <link href="css/pg.libFrontbox.css" rel="stylesheet">
+  <link href="css/pg.multiple-select.css" rel="stylesheet">
+  <link href="css/pg.loading.css" rel="stylesheet">
+  <link href="css/kendo.global.min.css" rel="stylesheet">
+  <link href="css/ckeditor.pontogov.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/prettyPhoto/css/prettyPhoto.css" type="text/css" media="screen" />
+  <link href="js/rs-plugin/css/settings.css" rel="stylesheet">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/redmond/jquery-ui.css">
 
 
-  <script src="lib/js/libJquery.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/jszip.min.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/kendo.all.min.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/kendo.messages.pt-BR.min.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/kendo.masked.date.picker.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/kendo.culture.pt-BR.min.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/pako_deflate.min.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/libPgFilter.js" charset="ISO-8859-1"></script>
+  <script src="js/libJquery.js" charset="ISO-8859-1"></script>
+  <script src="js/jszip.min.js" charset="ISO-8859-1"></script>
+  <script src="js/kendo.all.min.js" charset="ISO-8859-1"></script>
+  <script src="js/kendo.messages.pt-BR.min.js" charset="ISO-8859-1"></script>
+  <script src="js/kendo.masked.date.picker.js" charset="ISO-8859-1"></script>
+  <script src="js/kendo.culture.pt-BR.min.js" charset="ISO-8859-1"></script>
+  <script src="js/pako_deflate.min.js" charset="ISO-8859-1"></script>
+  <script src="js/libPgFilter.js" charset="ISO-8859-1"></script>
 
-  <script src="lib/js/fusion/fusioncharts.js"></script>
-  <script src="lib/js/fusion/themes/fusioncharts.theme.fint.js"></script>
+  <script src="js/fusion/fusioncharts.js"></script>
+  <script src="js/fusion/themes/fusioncharts.theme.fint.js"></script>
 
-  <script src="lib/js/libUtils.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/libFrontbox.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/kendo.timezones.min.js" charset="ISO-8859-1"></script>
-  <script src="lib/js/ckeditor/ckeditor.js"></script>
-  <script src="lib/js/jquery-ui.js"></script>
-  <script src="lib/js/multiple-select.js"></script>
-  <script src="lib/js/prettyPhoto/js/jquery.prettyPhoto.js" type="text/javascript"></script>
-  <script src="lib/js/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-  <script src="lib/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-  <script src="lib/js/mascara.js" type="text/javascript"></script>
-  <script src="lib/js/jquery.mask.js" charset="ISO-8859-1"></script>
+  <script src="js/libUtils.js" charset="ISO-8859-1"></script>
+  <script src="js/libFrontbox.js" charset="ISO-8859-1"></script>
+  <script src="js/kendo.timezones.min.js" charset="ISO-8859-1"></script>
+  <script src="js/ckeditor/ckeditor.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/multiple-select.js"></script>
+  <script src="js/prettyPhoto/js/jquery.prettyPhoto.js" type="text/javascript"></script>
+  <script src="js/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+  <script src="js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+  <script src="js/mascara.js" type="text/javascript"></script>
+  <script src="js/jquery.mask.js" charset="ISO-8859-1"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    #splConsulta #splHeader {
+      background-color: #e0ecff;
+      position: absolute;
+    }
+
+    #BarAcoes {
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+    }
+
+    #splConsulta #splHeader .k-bg-blue.screen-filter-content {
+      max-height: 58px;
+      overflow: auto;
+    }
+
+    #splConsulta #splFooter {
+      height: inherit;
+    }
+
+    #splConsulta #splFooter>div:nth-child(1) {
+      height: inherit;
+      overflow: hidden;
+    }
+
+    #splConsulta #splFooter>div:nth-child(1) .k-tabstrip-wrapper>div {
+      height: inherit;
+      overflow: hidden;
+    }
+
+    #bottonConsultaAvaliacaoPrestacaoConta .k-tabstrip-wrapper {
+      height: inherit;
+    }
+
+    .k-item.k-state-default {
+      z-index: 0;
+    }
+
+    .k-form {
+      height: 99%;
+    }
+
+    .k-form>form {
+      height: 100%;
+    }
+
+    .k-form #splConsulta {
+      height: inherit;
+    }
+
+    .k-form #splConsulta #splMiddle {
+      overflow: hidden;
+    }
+
+    .k-header-column-menu.k-state-active {
+      z-index: 0;
+    }
+
+    #splConsulta #splMiddle>div {
+      height: 100% !important;
+    }
+
+    .k-splitter {
+      border-width: 0px !important;
+    }
+
+    .k-i-hbar {
+      margin-top: 2px !important;
+      height: 2px !important;
+    }
+  </style>
 </head>
 
 <body>
-  
+  <script>
+    $(function () {
+      $("#WinConsultaLivro").kendoWindow(
+        {
+          width: "100%",
+          height: "100%"
+        }
+      );
+      var arrDataSource = [
+        {
+          name: "idLivro",
+          type: "integer",
+          label: "id",
+          visibleFilter: 'true',
+          orderFilter: '2',
+
+          orderGrid: '1',
+          widthGrid: '70',
+          hiddenGrid: 'false',
+          headerAttributesGrid: 'text-align: center;',
+          attributesGrid: 'text-align: center;',
+
+          showPreview: 'true',
+          indiceTabPreview: 'tabDadosGerais',
+          widthPreview: '80',
+          positionPreview: '1',
+        },
+        {
+          name: "dstitulo",
+          type: "string",
+          label: "titulo",
+          visibleFilter: 'true',
+          orderFilter: '3',
+
+          orderGrid: '2',
+          widthGrid: '',
+          hiddenGrid: 'false',
+          headerAttributesGrid: 'text-align: center;',
+          attributesGrid: 'text-align: center;',
+
+          showPreview: 'true',
+          indiceTabPreview: 'tabDadosGerais',
+          widthPreview: '600',
+          positionPreview: '2',
+        }
+      ]
+
+      arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaLivro");
+      createPgFilter(arrDataSource, "ConsultaLivro");
+
+      $("#frmConsultaLivro #BarAcoes").kendoToolBar();
+      $("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
+        columns: getColumnsQuery(arrDataSource)
+      });
+      $("#frmConsultaLivro #splConsulta").kendoSplitter({
+        orientation: "vertical",
+        panes: []
+      })
+      createScreenPreview(arrDataSource, "ConsultaLivro");
+
+    })
+  </script>
+  <div id="WinConsultaLivro">
+    <div class="k-form">
+      <form id="frmConsultaLivro" style="height: 100%;">
+        <div id="splConsulta">
+          <div id="splHeader">
+            <div class="k-bg-blue screen-filter-content">
+              <table>
+                <tr>
+                  <td style="width: 120px;text-align: right;vertical-align: top;padding-top: 6px;">
+                    Filtro(s):
+                  </td>
+
+                  <td>
+                    <div id="fltConsultaLivro" style="width: auto;"></div>
+                  </td>
+
+                  <td style="vertical-align: bottom;padding-bottom: 5px;">
+                    <span id="BtnPesquisar" style="cursor: pointer;width: 100px;height: 24px;" title="Pesquisar"
+                      data-role="button" class="k-button k-button-icon" role="button" aria-disabled="false"
+                      tabindex="29">
+                      <span class="k-sprite k-pg-icon k-i-l1-c2" style="margin: 0 auto; text-align: center;"></span>
+                      <span style="margin: 0 auto; margin-right: 3px;">Pesquisar</span>
+                    </span>
+
+                    <span id="BtnAddFilter" style="cursor: pointer;width: 21px !important;height: 21px !important"
+                      title="Adicionar Filtro" data-role="button" class="k-button k-button-icon" role="button"
+                      aria-disabled="false" tabindex="">
+                      <span class="k-sprite k-pg-icon k-i-l1-c1" style="margin: 0 auto;margin-top: 1.4px;"></span>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+
+              <div id="BarAcoes" style="text-align: right;height: 28px;"></div>
+            </div>
+          </div>
+          <div id="splMiddle">
+            <div id="GrdConsultaLivro">
+
+            </div>
+          </div>
+          <div id="splFooter">
+            <div id="bottonConsultaLivro">
+              <div id="tabStripConsultaLivro">
+                <ul>
+                  <li id="tabDadosGerais" class="k-state-active"><label>Detalhes</label></li>
+                </ul>
+                <div id="tabDadosGeraisVisualizacaoConsultaLivro"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
 
   <script src="script.js"></script>
 </body>
