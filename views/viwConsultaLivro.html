@@ -33,7 +33,7 @@
 				orderFilter: '3',
 
 				orderGrid: '2',
-				widthGrid: '',
+
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
@@ -127,7 +127,13 @@
 				hiddenGrid: 'false',
 				headerAttributesGrid: 'text-align: center;',
 				attributesGrid: 'text-align: center;',
-
+				templateGrid: function (livro) {
+					if (livro && livro.fldisponivel === "S") {
+						return "Disponivel"
+					} else {
+						return "Indisponivel"
+					}
+				},
 				showPreview: 'true',
 				indiceTabPreview: 'tabDadosGerais',
 				widthPreview: '70',
@@ -154,7 +160,8 @@
 							text: "Incluir",
 							group: "actions",
 							attributes: { tabindex: "30" },
-							click: function () { 
+							click: function () {
+								$("#frmConsultaLivro #idLivro").val("")
 								OpenWindow("CadastroLivro", true)
 							}
 						},
@@ -163,24 +170,80 @@
 							spriteCssClass: "k-pg-icon k-i-l1-c3",
 							text: "Editar",
 							group: "actions",
-							attributes: { tabindex: "32" },
-							click: function () { }
+							enable: false,
+							attributes: { tabindex: "31" },
+							click: function () {
+
+								let grid = $("#GrdConsultaLivro").data("kendoGrid")
+								let livroSelecionado = grid.dataItem(grid.select())
+
+								$("#frmConsultaLivro #idLivro").val(livroSelecionado.idlivro)
+
+								OpenWindow("CadastroLivro", true)
+							}
 						},
 						{
-							id: "BtnExcluir",
-							spriteCssClass: "k-pg-icon k-i-l1-c7",
-							text: "Excluir",
+							id: "BtnFechar",
+							spriteCssClass: "k-pg-icon k-i-l1-c4",
+							text: "Fechar",
 							group: "actions",
-							attributes: { tabindex: "31" },
-							click: function () { }
+							attributes: { tabindex: "32" },
+							click: function () {
+								$("#WinConsultaLivro").data("kendoWindow").close();
+							}
 						},
 					]
 				}
 			],
 		});
 
+		let DtsConsultaLivro = new kendo.data.DataSource({
+			pageSize: 100,
+			transport: {
+				read: function (options) {
+					options.success(JSON.parse(localStorage.getItem("livros")) || [])
+				}
+			},
+			schema: {
+				model: getModelDataSource(arrDataSource)
+			}
+		})
+
 		$("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
-			columns: getColumnsQuery(arrDataSource)
+			pdf: SetPdfOptions("Listagem de Livros"),
+			pdfExport: function () {
+				tituloPdfExport = "Listagem de Livros"
+			},
+			dataSource: DtsConsultaLivro,
+			height: getHeightGridQuery("ConsultaLivro"),
+			columns: getColumnsQuery(arrDataSource),
+			selectable: "row",
+			resizable: true,
+			reorderable: true,
+			navigatable: true,
+			columnMenu: true,
+			filterable: true,
+			sortable: {
+				mode: "multiple",
+				allowUnsort: true
+			},
+			sort: function () {
+			},
+			change: function () {
+				$("#frmConsultaLivro #BarAcoes").data("kendoToolBar").enable("#BtnEditar")
+			},
+			pageable: {
+				pageSizes: [100, 300, 500, "all"],
+				numeric: false,
+				input: true
+			},
+			columns: getColumnsQuery(arrDataSource),
+			columnShow: function (e) {
+			},
+			columnHide: function (e) {
+			},
+			filter: function (e) {
+			}
 		});
 
 		$("#frmConsultaLivro #splConsulta").kendoSplitter({
@@ -197,6 +260,7 @@
 
 <div class="k-form">
 	<form id="frmConsultaLivro" style="height: 100%;">
+		<input type="hidden" id="idLivro">
 		<div id="splConsulta">
 			<div id="splHeader">
 				<div class="k-bg-blue screen-filter-content">

@@ -54,7 +54,7 @@
     }
 
     #BarAcoes {
-      position: absolute;
+      position: relative;
       width: 100%;
       bottom: 0px;
     }
@@ -149,7 +149,9 @@
         resizable: false,
         closable: blModal,
         close: function () {
-          $('#Win' + nmJanela).remove();
+          $('#Win' + nmJanela).fadeOut("fast", function(){
+            $('#Win' + nmJanela).data("kendoWindow").destroy();
+          })
         },
       });
     }

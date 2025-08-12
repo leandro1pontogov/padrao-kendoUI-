@@ -4,24 +4,109 @@
 	})
 
 	$("#flGeneroLiterario").kendoDropDownList({
-    dataSource: [
-      { name: "Aventura"},
-	  { name: "Acao"},
-	  { name: "Romance"},
-    ],
-	optionLabel: "Selecione um Genero",
-    dataTextField: "name",
-    dataValueField: "name"
-  });
+		dataSource: [
+			{ name: "Aventura" },
+			{ name: "Acao" },
+			{ name: "Romance" },
+		],
+		optionLabel: "Selecione um Genero",
+		dataTextField: "name",
+		dataValueField: "name"
+	});
 
-  $("#dsNumeroPaginas").kendoNumericTextBox({
-    min: 0,
-	format: ""
-  })
+	$("#dsNumeroPaginas").kendoNumericTextBox({
+		min: 0,
+		format: ""
+	})
 
-  $("#dtPublicacao").kendoDatePicker({
+	$("#dtPublicacao").kendoDatePicker({
 
-  })
+	})
+
+	$("#frmCadastroLivro #barAcoes").kendoToolBar({
+		items: [
+			{
+				type: "spacer",
+			},
+			{
+				type: "buttonGroup",
+				buttons: [
+					{
+						id: "BtnGravar",
+						spriteCssClass: "k-pg-icon k-i-l1-c5",
+						text: "Gravar",
+						group: "actions",
+						attributes: { tabindex: "33" },
+						click: function () {
+							const livros = JSON.parse(localStorage.getItem("livros")) || [];
+
+							let novoId = 1;
+							if (livros.length > 0) {
+								novoId = Math.max(...livros.map(l => l.idLivro)) + 1;
+							}
+
+							livros.push({
+								idlivro: novoId,
+								dstitulo: $("#dsTitulo").val(),
+								dsautor: $("#dsAutor").val(),
+								flgeneroliterario: $("#flGeneroLiterario").val(),
+								dsnumeropaginas: $("#dsNumeroPaginas").val(),
+								dtpublicacao: kendo.parseDate($("#dtPublicacao").val()),
+								fldisponivel: $("#flDisponivel").is(":checked") ? "S" : "N"
+							});
+
+							localStorage.setItem("livros", JSON.stringify(livros));
+							$("#GrdConsultaLivro").data("kendoGrid").dataSource.read();
+							$("#WinCadastroLivro").data("kendoWindow").close();
+
+						}
+					},
+					{
+						id: "BtnExcluir",
+						spriteCssClass: "k-pg-icon k-i-l1-c7",
+						text: "Excluir",
+						group: "actions",
+						attributes: { tabindex: "34" },
+						click: function () {
+							const livros = JSON.parse(localStorage.getItem("livros")) || [];
+
+							let grid = $("#GrdConsultaLivro").data("kendoGrid")
+							let livroSelecionado = grid.dataItem(grid.select())
+
+							const novosLivros = livros.filter(a => (a.idLivro !== livroSelecionado.idLivro))
+
+							localStorage.setItem("livros", JSON.stringify(novosLivros))
+							$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
+							$("#WinCadastroLivro").data("kendoWindow").close();
+
+						}
+					},
+					{
+						id: "BtnFechar",
+						spriteCssClass: "k-pg-icon k-i-l1-c4",
+						text: "Fechar",
+						group: "actions",
+						attributes: { tabindex: "35" },
+						click: function () {
+							$("#WinCadastroLivro").data("kendoWindow").close()
+						}
+					}
+				]
+			}
+		]
+	})
+
+	if ($("#frmConsultaLivro #idLivro").val() !== "") {
+		let grid = $("#GrdConsultaLivro").data("kendoGrid")
+		let livroSelecionado = grid.dataItem(grid.select())
+
+		$("#frmCadastroLivro #idLivro").val(livroSelecionado.idlivro)
+		$("#frmCadastroLivro #dsTitulo").val(livroSelecionado.dstitulo)
+		$("#frmCadastroLivro #dsAutor").val(livroSelecionado.dsautor)
+		$("#frmCadastroLivro #flGeneroLiterario").data("kendoDropDownList").value(livroSelecionado.flgeneroliterario)
+		$("#frmCadastroLivro #dsNumeroPaginas").data("kendoNumericTextBox").value(livroSelecionado.dsnumeropaginas)
+		$("#frmCadastroLivro #dtPublicacao").data("kendoDatePicker").value(livroSelecionado.dtpublicacao)
+	}
 
 </script>
 
@@ -41,45 +126,51 @@
 				<input type="text" id="dsTitulo" name="dsTitulo" class="k-textbox" style="width: 600px;">
 			</td>
 		</tr>
-		</table>
-		<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
+	</table>
+	<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
 		<tr>
 			<td style="text-align: right; width: 120px;">Autor:</td>
 			<td>
-				<input type="text" id="dsAutor" name="dsAutor" class="k-textbox" style="width: 600px;"> 
+				<input type="text" id="dsAutor" name="dsAutor" class="k-textbox" style="width: 600px;">
 			</td>
 		</tr>
-		</table>
-		<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
+	</table>
+	<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
 		<tr>
 			<td style="text-align: right; width: 120px;">Genero Literario:</td>
 			<td>
 				<input id="flGeneroLiterario" name="flGeneroLiterario" style="width: 150px;">
 			</td>
 		</tr>
-		</table>
-		<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
+	</table>
+	<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
 		<tr>
 			<td style="text-align: right; width: 120px;">Quantidade de Paginas:</td>
 			<td>
 				<input id="dsNumeroPaginas" name="dsNumeroPaginas" style="width: 100px;">
 			</td>
 		</tr>
-		</table>
-		<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
+	</table>
+	<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
 		<tr>
 			<td style="text-align: right; width: 120px;">Data de Publicacao:</td>
 			<td>
 				<input id="dtPublicacao" name="dtPublicacao">
 			</td>
 		</tr>
-		</table>
-		<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
+	</table>
+	<table width="100%" cellspacing="2" cellpadding="0" role="presentation">
 		<tr>
-			<td style="text-align: right; width: 120px;">Disponivel:</td>
 			<td>
-				<input type="checkbox" id="flDisponivel" name="flDisponivel">
+				<input type="checkbox" id="flDisponivel" name="flDisponivel" class="k-checkbox"
+					style="margin-left: 120px;">
+				<label for="flDisponivel" class="k-label-checkbox">Disponivel</label>
 			</td>
 		</tr>
-		</table>
+	</table>
+
+	<div id="barAcoes">
+
+	</div>
+
 </form>
