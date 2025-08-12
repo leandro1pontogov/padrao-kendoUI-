@@ -134,7 +134,7 @@
         {
           name: "idLivro",
           type: "integer",
-          label: "id",
+          label: "Id",
           visibleFilter: 'true',
           orderFilter: '2',
 
@@ -152,7 +152,7 @@
         {
           name: "dstitulo",
           type: "string",
-          label: "titulo",
+          label: "Titulo",
           visibleFilter: 'true',
           orderFilter: '3',
 
@@ -166,20 +166,132 @@
           indiceTabPreview: 'tabDadosGerais',
           widthPreview: '600',
           positionPreview: '2',
+        },
+        {
+          name: "dsautor",
+          type: "string",
+          label: "Autor",
+          visibleFilter: 'true',
+          orderFilter: '4',
+
+          orderGrid: '3',
+          widthGrid: '',
+          hiddenGrid: 'false',
+          headerAttributesGrid: 'text-align: center;',
+          attributesGrid: 'text-align: center;',
+
+          showPreview: 'true',
+          indiceTabPreview: 'tabDadosGerais',
+          widthPreview: '600',
+          positionPreview: '3',
+        },
+        {
+          name: "flgeneroliterario",
+          type: "string",
+          label: "Genero Literario",
+          visibleFilter: 'true',
+          orderFilter: '5',
+
+          orderGrid: '4',
+          widthGrid: '200',
+          hiddenGrid: 'false',
+          headerAttributesGrid: 'text-align: center;',
+          attributesGrid: 'text-align: center;',
+
+          showPreview: 'true',
+          indiceTabPreview: 'tabDadosGerais',
+          widthPreview: '600',
+          positionPreview: '4'
+        },
+        {
+          name: "dsnumeropaginas",
+          type: "integer",
+          label: "Numero Paginas",
+          visibleFilter: 'true',
+          orderFilter: '6',
+
+          orderGrid: '5',
+          widthGrid: '200',
+          hiddenGrid: 'false',
+          headerAttributesGrid: 'text-align: center;',
+          attributesGrid: 'text-align: center;',
+
+          showPreview: 'true',
+          indiceTabPreview: 'tabDadosGerais',
+          widthPreview: '600',
+          positionPreview: '7'
+        },
+        {
+          name: "dtpublicacao",
+          type: "date",
+          label: "Data Publicacao",
+          visibleFilter: 'true',
+          orderFilter: '7',
+
+          orderGrid: '6',
+          widthGrid: '300',
+          hiddenGrid: 'false',
+          headerAttributesGrid: 'text-align: center;',
+          attributesGrid: 'text-align: center;',
+
+          showPreview: 'true',
+          indiceTabPreview: 'tabDadosGerais',
+          widthPreview: '300',
+          positionPreview: '8'
         }
+
       ]
 
       arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaLivro");
+
       createPgFilter(arrDataSource, "ConsultaLivro");
 
-      $("#frmConsultaLivro #BarAcoes").kendoToolBar();
+      $("#frmConsultaLivro #BarAcoes").kendoToolBar({
+        items:[
+          {
+            type: "spacer"
+          },
+          {
+            type: "buttonGroup",
+            buttons:[
+              {
+              id: "BtnIncluir",
+              spriteCssClass: "k-pg-icon k-i-l1-c1",
+              text: "Incluir",
+              group: "actions",
+              attributes: {tabindex: "30"},
+              click: function(){}
+            },
+            { 
+              id: "BtnEditar",
+              spriteCssClass: "k-pg-icon k-i-l1-c3",
+              text: "Editar",
+              group: "actions",
+              attributes: {tabindex: "32"},
+              click: function(){}
+            },
+            {
+              id: "BtnExcluir",
+              spriteCssClass: "k-pg-icon k-i-l1-c7",
+              text: "Excluir",
+              group: "actions",
+              attributes: {tabindex: "31"},
+              click: function(){}
+            },
+          ]
+        }
+      ],
+      });
+      
       $("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
         columns: getColumnsQuery(arrDataSource)
       });
+
       $("#frmConsultaLivro #splConsulta").kendoSplitter({
         orientation: "vertical",
         panes: []
       })
+
       createScreenPreview(arrDataSource, "ConsultaLivro");
 
     })
