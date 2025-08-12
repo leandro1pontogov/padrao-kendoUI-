@@ -1,0 +1,253 @@
+<script>
+	$(function () {
+		$("#WinConsultaLivro").kendoWindow(
+			{
+				width: "100%",
+				height: "100%"
+			}
+		);
+		var arrDataSource = [
+			{
+				name: "idlivro",
+				type: "integer",
+				label: "Id",
+				visibleFilter: 'true',
+				orderFilter: '2',
+
+				orderGrid: '1',
+				widthGrid: '70',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '70',
+				positionPreview: '1',
+			},
+			{
+				name: "dstitulo",
+				type: "string",
+				label: "Titulo",
+				visibleFilter: 'true',
+				orderFilter: '3',
+
+				orderGrid: '2',
+				widthGrid: '',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '600',
+				positionPreview: '2',
+			},
+			{
+				name: "dsautor",
+				type: "string",
+				label: "Autor",
+				visibleFilter: 'true',
+				orderFilter: '4',
+
+				orderGrid: '3',
+				widthGrid: '',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '600',
+				positionPreview: '3',
+			},
+			{
+				name: "flgeneroliterario",
+				type: "string",
+				label: "Genero Literario",
+				visibleFilter: 'true',
+				orderFilter: '5',
+
+				orderGrid: '4',
+				widthGrid: '200',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '300',
+				positionPreview: '4'
+			},
+			{
+				name: "dsnumeropaginas",
+				type: "integer",
+				label: "Numero Paginas",
+				visibleFilter: 'true',
+				orderFilter: '6',
+
+				orderGrid: '5',
+				widthGrid: '150',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '70',
+				positionPreview: '7'
+			},
+			{
+				name: "dtpublicacao",
+				type: "date",
+				label: "Data Publicacao",
+				visibleFilter: 'true',
+				orderFilter: '7',
+
+				orderGrid: '6',
+				widthGrid: '300',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '70',
+				positionPreview: '8'
+			},
+			{
+				name: "fldisponivel",
+				type: "string",
+				label: "Disponivel",
+				visibleFilter: 'true',
+				orderFilter: '8',
+
+				orderGrid: '7',
+				widthGrid: '100',
+				hiddenGrid: 'false',
+				headerAttributesGrid: 'text-align: center;',
+				attributesGrid: 'text-align: center;',
+
+				showPreview: 'true',
+				indiceTabPreview: 'tabDadosGerais',
+				widthPreview: '70',
+				positionPreview: '9'
+			}
+
+		]
+
+		arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaLivro");
+
+		createPgFilter(arrDataSource, "ConsultaLivro");
+
+		$("#frmConsultaLivro #BarAcoes").kendoToolBar({
+			items: [
+				{
+					type: "spacer"
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
+							id: "BtnIncluir",
+							spriteCssClass: "k-pg-icon k-i-l1-c1",
+							text: "Incluir",
+							group: "actions",
+							attributes: { tabindex: "30" },
+							click: function () { 
+								OpenWindow("CadastroLivro", true)
+							}
+						},
+						{
+							id: "BtnEditar",
+							spriteCssClass: "k-pg-icon k-i-l1-c3",
+							text: "Editar",
+							group: "actions",
+							attributes: { tabindex: "32" },
+							click: function () { }
+						},
+						{
+							id: "BtnExcluir",
+							spriteCssClass: "k-pg-icon k-i-l1-c7",
+							text: "Excluir",
+							group: "actions",
+							attributes: { tabindex: "31" },
+							click: function () { }
+						},
+					]
+				}
+			],
+		});
+
+		$("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
+			columns: getColumnsQuery(arrDataSource)
+		});
+
+		$("#frmConsultaLivro #splConsulta").kendoSplitter({
+			orientation: "vertical",
+			panes: []
+		});
+
+		$("#WinConsultaLivro").data("kendoWindow").open();
+
+		createScreenPreview(arrDataSource, "ConsultaLivro");
+
+	})
+</script>
+
+<div class="k-form">
+	<form id="frmConsultaLivro" style="height: 100%;">
+		<div id="splConsulta">
+			<div id="splHeader">
+				<div class="k-bg-blue screen-filter-content">
+					<table>
+						<tr>
+							<td style="width: 120px;text-align: right;vertical-align: top;padding-top: 6px;">
+								Filtro(s):
+							</td>
+
+							<td>
+								<div id="fltConsultaLivro" style="width: auto;"></div>
+							</td>
+
+							<td style="vertical-align: bottom;padding-bottom: 5px;">
+								<span id="BtnPesquisar" style="cursor: pointer;width: 100px;height: 24px;"
+									title="Pesquisar" data-role="button" class="k-button k-button-icon" role="button"
+									aria-disabled="false" tabindex="29">
+									<span class="k-sprite k-pg-icon k-i-l1-c2"
+										style="margin: 0 auto; text-align: center;"></span>
+									<span style="margin: 0 auto; margin-right: 3px;">Pesquisar</span>
+								</span>
+
+								<span id="BtnAddFilter"
+									style="cursor: pointer;width: 21px !important;height: 21px !important"
+									title="Adicionar Filtro" data-role="button" class="k-button k-button-icon"
+									role="button" aria-disabled="false" tabindex="">
+									<span class="k-sprite k-pg-icon k-i-l1-c1"
+										style="margin: 0 auto;margin-top: 1.4px;"></span>
+								</span>
+							</td>
+						</tr>
+					</table>
+
+					<div id="BarAcoes" style="text-align: right;height: 28px;"></div>
+				</div>
+			</div>
+			<div id="splMiddle">
+				<div id="GrdConsultaLivro">
+
+				</div>
+			</div>
+			<div id="splFooter">
+				<div id="bottonConsultaLivro">
+					<div id="tabStripConsultaLivro">
+						<ul>
+							<li id="tabDadosGerais" class="k-state-active"><label>Detalhes</label></li>
+						</ul>
+						<div id="tabDadosGeraisVisualizacaoConsultaLivro"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
