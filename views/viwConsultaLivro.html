@@ -146,6 +146,13 @@
 
 		createPgFilter(arrDataSource, "ConsultaLivro");
 
+		$("#frmConsultaLivro #BtnPesquisar").kendoButton({
+			click: function(){
+				DtsConsultaLivro.filter(getExtraFilter())
+				DtsConsultaLivro.read()
+			}
+		})
+
 		$("#frmConsultaLivro #BarAcoes").kendoToolBar({
 			items: [
 				{
@@ -196,6 +203,11 @@
 				}
 			],
 		});
+
+		function getExtraFilter(){
+			let arrFilds = LoadFilterSplitter("ConsultaLivro", arrDataSource)
+			return arrFilds;
+		}
 
 		let DtsConsultaLivro = new kendo.data.DataSource({
 			pageSize: 100,
@@ -308,7 +320,7 @@
 				</div>
 			</div>
 			<div id="splMiddle">
-				<div id="GrdConsultaLivro">
+				<div id="GrdConsultaLivro" data-use-state-screen="true">
 
 				</div>
 			</div>
