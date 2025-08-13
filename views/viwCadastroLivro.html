@@ -1,6 +1,7 @@
 <script>
 
 	$(function () {
+		kendo.culture("pt-BR")
 		$("#WinCadastroLivro").data("kendoWindow").center().open();
 
 	})
@@ -22,10 +23,7 @@
 	})
 
 	$("#dtPublicacao").kendoDatePicker({
-	})
-
-	$("#dtpublicacao").kendoDatePicker({
-		format: "dd/MM/yyyy",
+		format: "dd/MM/yyyy"
 	})
 
 	$("#frmCadastroLivro #barAcoes").kendoToolBar({
@@ -77,13 +75,25 @@
 								const livros = JSON.parse(localStorage.getItem("livros")) || [];
 								ultimoID++;
 
+								const novoTitulo = $("#frmCadastroLivro #dsTitulo").val().trim().toLowerCase();
+								const idLivroAtual = $("#frmCadastroLivro #idLivro").val(); 
+
+								const existeMesmoTitulo = livros.some(l =>
+									l.dstitulo.trim().toLowerCase() === novoTitulo
+								);
+
+								if (existeMesmoTitulo) {
+									Message('dlg', 'E', 'Já existe um livro com esse título.');
+									return;
+								}
+
 								livros.push({
 									idlivro: ultimoID,
 									dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
 									dsautor: $("#frmCadastroLivro #dsAutor").val(),
 									flgeneroliterario: $("#frmCadastroLivro #flGeneroLiterario").val(),
 									dsnumeropaginas: $("#frmCadastroLivro #dsNumeroPaginas").val(),
-									dtpublicacao: kendo.parseDate($("#frmCadastroLivro #dtPublicacao").val()),
+									dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
 									fldisponivel: $("#frmCadastroLivro #flDisponivel").is(":checked") ? "S" : "N"
 								});
 
@@ -91,6 +101,8 @@
 								localStorage.setItem("ultimoID", ultimoID)
 								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read();
 								$("#WinCadastroLivro").data("kendoWindow").close();
+
+								Message('ntf', 'S', 'Livro adicionado com sucesso!!')
 
 							} else {
 								const livros = JSON.parse(localStorage.getItem("livros")) || [];
@@ -105,7 +117,7 @@
 										dsautor: $("#frmCadastroLivro #dsAutor").val(),
 										flgeneroliterario: $("#frmCadastroLivro #flGeneroLiterario").val(),
 										dsnumeropaginas: $("#frmCadastroLivro #dsNumeroPaginas").val(),
-										dtpublicacao: kendo.parseDate($("#frmCadastroLivro #dtPublicacao").val()),
+										dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
 										fldisponivel: $("#frmCadastroLivro #flDisponivel").is(":checked") ? "S" : "N"
 									}
 
@@ -113,9 +125,10 @@
 									localStorage.setItem("ultimoID", ultimoID)
 									$("#GrdConsultaLivro").data("kendoGrid").dataSource.read();
 									$("#WinCadastroLivro").data("kendoWindow").close();
+									Message('ntf', 'S', 'Livro editado com sucesso!!')
 								}
 							}
-							
+
 						}
 					},
 					{
@@ -231,5 +244,7 @@
 	<div id="barAcoes">
 
 	</div>
+
+	<div id="popNotificacao"></div>
 
 </form>

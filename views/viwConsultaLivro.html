@@ -232,6 +232,9 @@
 			change: function () {
 				$("#frmConsultaLivro #BarAcoes").data("kendoToolBar").enable("#BtnEditar")
 			},
+			dataBound: function () {
+				LoadGridExportActions("frmConsultaLivro", "GrdConsultaLivro", true)
+			},
 			pageable: {
 				pageSizes: [100, 300, 500, "all"],
 				numeric: false,
@@ -239,19 +242,22 @@
 			},
 			columns: getColumnsQuery(arrDataSource),
 			columnShow: function (e) {
+				setWidthOnShowColumnGrid(e, 'ConsultaLivro');
 			},
 			columnHide: function (e) {
+				setWidthOnHideColumnGrid(e, 'ConsultaLivro');
 			},
 			filter: function (e) {
+				mountFilteredScreen('filterColumn', e, 'ConsultaLivro', arrDataSource, DtsConsultaLivro, getExtraFilter());
 			}
 		});
 
 		$("#frmConsultaLivro #splConsulta").kendoSplitter({
 			orientation: "vertical",
 			panes: [
-				{min: "20%"},
-				{min: "20%"},
-				{min: "20%"},
+				{ min: "20%" },
+				{ min: "20%" },
+				{ min: "20%" },
 			]
 		});
 
