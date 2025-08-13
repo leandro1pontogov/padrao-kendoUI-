@@ -248,7 +248,11 @@
 
 		$("#frmConsultaLivro #splConsulta").kendoSplitter({
 			orientation: "vertical",
-			panes: []
+			panes: [
+				{min: "20%"},
+				{min: "20%"},
+				{min: "20%"},
+			]
 		});
 
 		$("#WinConsultaLivro").data("kendoWindow").open();

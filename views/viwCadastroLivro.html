@@ -1,6 +1,8 @@
 <script>
+
 	$(function () {
 		$("#WinCadastroLivro").data("kendoWindow").center().open();
+
 	})
 
 	$("#flGeneroLiterario").kendoDropDownList({
@@ -20,7 +22,10 @@
 	})
 
 	$("#dtPublicacao").kendoDatePicker({
+	})
 
+	$("#dtpublicacao").kendoDatePicker({
+		format: "dd/MM/yyyy",
 	})
 
 	$("#frmCadastroLivro #barAcoes").kendoToolBar({
@@ -38,27 +43,79 @@
 						group: "actions",
 						attributes: { tabindex: "33" },
 						click: function () {
-							const livros = JSON.parse(localStorage.getItem("livros")) || [];
 
-							let novoId = 1;
-							if (livros.length > 0) {
-								novoId = Math.max(...livros.map(l => l.idLivro)) + 1;
+							if ($("#frmCadastroLivro #dsTitulo").val() === "") {
+								Message('dlg', 'A', 'O preenchimento do campo Titulo é obrigatorio')
+								return;
 							}
 
-							livros.push({
-								idlivro: novoId,
-								dstitulo: $("#dsTitulo").val(),
-								dsautor: $("#dsAutor").val(),
-								flgeneroliterario: $("#flGeneroLiterario").val(),
-								dsnumeropaginas: $("#dsNumeroPaginas").val(),
-								dtpublicacao: kendo.parseDate($("#dtPublicacao").val()),
-								fldisponivel: $("#flDisponivel").is(":checked") ? "S" : "N"
-							});
+							if ($("#frmCadastroLivro #dsAutor").val() === "") {
+								Message('dlg', 'A', 'O preenchimento do campo Autor é obrigatorio')
+								return;
+							}
 
-							localStorage.setItem("livros", JSON.stringify(livros));
-							$("#GrdConsultaLivro").data("kendoGrid").dataSource.read();
-							$("#WinCadastroLivro").data("kendoWindow").close();
+							if ($("#frmCadastroLivro #flGeneroLiterario").val() === "") {
+								Message('dlg', 'A', 'O preenchimento do campo Genero é obrigatorio')
+								return;
+							}
 
+							if ($("#frmCadastroLivro #dsNumeroPaginas").val() === "") {
+								Message('dlg', 'A', 'O preenchimento do campo Numero de Paginas é obrigatorio')
+								return;
+							}
+
+							if ($("#frmCadastroLivro #dtPublicacao").val() === "") {
+								Message('dlg', 'A', 'O preenchimento do campo Data de Publicacao é obrigatorio')
+								return;
+							}
+
+							console.log(Message)
+
+							if ($("#frmCadastroLivro #idLivro").val() == "") {
+
+								var ultimoID = parseInt(localStorage.getItem("ultimoID")) || 0;
+								const livros = JSON.parse(localStorage.getItem("livros")) || [];
+								ultimoID++;
+
+								livros.push({
+									idlivro: ultimoID,
+									dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
+									dsautor: $("#frmCadastroLivro #dsAutor").val(),
+									flgeneroliterario: $("#frmCadastroLivro #flGeneroLiterario").val(),
+									dsnumeropaginas: $("#frmCadastroLivro #dsNumeroPaginas").val(),
+									dtpublicacao: kendo.parseDate($("#frmCadastroLivro #dtPublicacao").val()),
+									fldisponivel: $("#frmCadastroLivro #flDisponivel").is(":checked") ? "S" : "N"
+								});
+
+								localStorage.setItem("livros", JSON.stringify(livros));
+								localStorage.setItem("ultimoID", ultimoID)
+								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read();
+								$("#WinCadastroLivro").data("kendoWindow").close();
+
+							} else {
+								const livros = JSON.parse(localStorage.getItem("livros")) || [];
+								const grid = $("#GrdConsultaLivro").data("kendoGrid")
+								const livroSelecionado = grid.dataItem(grid.select())
+
+								const index = livros.findIndex((l) => l.idlivro == livroSelecionado.idlivro);
+								if (index !== -1) {
+									livros[index] = {
+										idlivro: livros[index].idlivro,
+										dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
+										dsautor: $("#frmCadastroLivro #dsAutor").val(),
+										flgeneroliterario: $("#frmCadastroLivro #flGeneroLiterario").val(),
+										dsnumeropaginas: $("#frmCadastroLivro #dsNumeroPaginas").val(),
+										dtpublicacao: kendo.parseDate($("#frmCadastroLivro #dtPublicacao").val()),
+										fldisponivel: $("#frmCadastroLivro #flDisponivel").is(":checked") ? "S" : "N"
+									}
+
+									localStorage.setItem("livros", JSON.stringify(livros));
+									localStorage.setItem("ultimoID", ultimoID)
+									$("#GrdConsultaLivro").data("kendoGrid").dataSource.read();
+									$("#WinCadastroLivro").data("kendoWindow").close();
+								}
+							}
+							
 						}
 					},
 					{
@@ -70,10 +127,10 @@
 						click: function () {
 							const livros = JSON.parse(localStorage.getItem("livros")) || [];
 
-							let grid = $("#GrdConsultaLivro").data("kendoGrid")
-							let livroSelecionado = grid.dataItem(grid.select())
+							const grid = $("#GrdConsultaLivro").data("kendoGrid")
+							const livroSelecionado = grid.dataItem(grid.select())
 
-							const novosLivros = livros.filter(a => (a.idLivro !== livroSelecionado.idLivro))
+							const novosLivros = livros.filter(a => (a.idlivro !== livroSelecionado.idlivro))
 
 							localStorage.setItem("livros", JSON.stringify(novosLivros))
 							$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
@@ -97,8 +154,10 @@
 	})
 
 	if ($("#frmConsultaLivro #idLivro").val() !== "") {
-		let grid = $("#GrdConsultaLivro").data("kendoGrid")
-		let livroSelecionado = grid.dataItem(grid.select())
+
+		const grid = $("#GrdConsultaLivro").data("kendoGrid")
+		const livroSelecionado = grid.dataItem(grid.select())
+		console.log(livroSelecionado)
 
 		$("#frmCadastroLivro #idLivro").val(livroSelecionado.idlivro)
 		$("#frmCadastroLivro #dsTitulo").val(livroSelecionado.dstitulo)
